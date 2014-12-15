@@ -140,7 +140,7 @@
 	[self.collectionView.collectionViewLayout invalidateLayout];
 	[self.collectionView reloadData];
 	dispatch_async(dispatch_get_main_queue(), ^{
-		[self selectItem:self.selectedItem animated:NO];
+		[self selectItem:self.selectedItem animated:NO notifySelection:NO];
 	});
 }
 
@@ -172,6 +172,11 @@
 
 - (void)selectItem:(NSUInteger)item animated:(BOOL)animated
 {
+    [self selectItem:item animated:animated notifySelection:YES];
+}
+
+- (void)selectItem:(NSUInteger)item animated:(BOOL)animated notifySelection:(BOOL)notifySelection
+{
 	[self.collectionView selectItemAtIndexPath:[NSIndexPath indexPathForItem:item inSection:0]
 									  animated:animated
 								scrollPosition:UICollectionViewScrollPositionNone];
@@ -179,7 +184,8 @@
 
 	self.selectedItem = item;
 
-	if ([self.delegate respondsToSelector:@selector(pickerView:didSelectItem:)])
+	if (notifySelection &&
+        [self.delegate respondsToSelector:@selector(pickerView:didSelectItem:)])
 		[self.delegate pickerView:self didSelectItem:item];
 }
 
