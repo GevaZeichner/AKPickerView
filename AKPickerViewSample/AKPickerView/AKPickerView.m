@@ -148,7 +148,8 @@
 {
 	CGFloat offset = 0.0;
     
-    if (item < [self.collectionView numberOfItemsInSection:0])
+    if (self.collectionView.numberOfSections > 0 &&
+        item < [self.collectionView numberOfItemsInSection:0])
     {
         for (NSInteger i = 0; i < item; i++) {
             NSIndexPath *_indexPath = [NSIndexPath indexPathForItem:i inSection:0];
