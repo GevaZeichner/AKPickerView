@@ -338,6 +338,12 @@
 	[self.label.layer addAnimation:transition forKey:nil];
 
 	UIFont *font = self.selected ? self.highlightedFont : self.font;
+    
+    if (!font)
+    {
+        return;
+    }
+    
 	if ([self.label respondsToSelector:@selector(setAttributedText:)]) {
 		self.label.attributedText = [[NSAttributedString alloc] initWithString:self.label.attributedText.string
 																	attributes:@{NSFontAttributeName: font}];
